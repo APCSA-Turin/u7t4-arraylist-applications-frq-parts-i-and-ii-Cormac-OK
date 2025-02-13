@@ -1,5 +1,6 @@
 package com.example.project.WordScramble;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class WordScramble {
   /** Scrambles a given word.
    *
@@ -13,8 +14,26 @@ public class WordScramble {
    *  - letters were swapped at most once
    */
   public static String scrambleWord(String word) {
-      /* to be implemented in part (a) */
-      return "";
+    char[] wordArray = new char[word.length()];
+    for (int i = 0; i < word.length(); i ++){
+      wordArray[i] = word.charAt(i);
+    }
+
+    for (int i = 0; i < wordArray.length-1; i ++){
+      if(wordArray[i] == 'A' && wordArray[i+1] != 'A'){
+        char temp = wordArray[i];
+        wordArray[i] = wordArray[i+1];
+        wordArray[i+1] = temp;
+        i++;
+      }
+    }
+
+    String scrambledWord = "";
+    for(char letter: wordArray){
+      scrambledWord += letter;
+    }
+
+    return scrambledWord;
   }
 
   /** Modifies wordList by replacing each word with its scrambled
@@ -30,7 +49,23 @@ public class WordScramble {
    *    before the method was called
    */
   public static ArrayList<String> scrambleOrRemove(ArrayList<String> wordList) {
-      /* to be implemented in part (b) */
-      return new ArrayList<String>();
+    ArrayList<String> original = new ArrayList<String>();
+    for (String str: wordList){
+      original.add(str);
+    }
+
+    for(int i = 0; i < wordList.size(); i ++){
+      wordList.set(i, scrambleWord(wordList.get(i)));
+    }
+    for(int i = 0; i < wordList.size(); i ++){
+      if(wordList.get(i).equals(original.get(i))){
+        wordList.remove(i);
+        original.remove(i);
+        i--;
+      }
+    }
+
+    return wordList;
+    
   }
 }
